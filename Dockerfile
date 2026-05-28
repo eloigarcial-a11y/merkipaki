@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-WORKDIR /opt/render/project/src
+WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci

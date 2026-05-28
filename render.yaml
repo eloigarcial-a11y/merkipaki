@@ -9,3 +9,11 @@ services:
         sync: false
       - key: APIFY_TOKEN
         sync: false
+      - key: DATABASE_URL
+        fromDatabase:
+          name: merkipaki-db
+          property: connectionString
+
+databases:
+  - name: merkipaki-db
+    plan: free

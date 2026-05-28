@@ -1,12 +1,13 @@
 // backend/config/db.js
 const { Sequelize } = require('sequelize');
-const path = require('path');
 
-// Sequelize usa sql.js automáticamente como fallback
-const sequelize = new Sequelize({
-  dialect: 'sqlite',
-  storage: path.join(__dirname, '../database.sqlite'),
-  logging: false
+// PostgreSQL en Render
+const sequelize = new Sequelize(process.env.DATABASE_URL || 'postgres://postgres:password@localhost:5432/merkipaki', {
+  dialect: 'postgres',
+  logging: false,
+  define: {
+    timestamps: true
+  }
 });
 
 module.exports = sequelize;
