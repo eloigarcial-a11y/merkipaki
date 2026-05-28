@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merkipaki — Comparador</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght=300;400;500;600&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <aside id="sidebar">
+    <div class="brand">
+      <svg class="brand-svg" viewBox="0 0 52 52" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="52" height="52" rx="12" fill="#2a6049"/>
+        <path d="M18 22 Q18 12 26 12 Q34 12 34 22" stroke="#a8dfc0" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+        <path d="M13 22 L12 40 Q12 44 16 44 L36 44 Q40 44 39 40 L38 22 Z" fill="#3a7d60"/>
+        <path d="M21 28 L31 28 M26 23 L26 33" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+      <span class="brand-name">Merkipaki</span>
+    </div>
+
+    <nav id="menu">
+      <a href="#" class="nav-item activo" onclick="irA('comparador', this)">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span>Comparador</span>
+        </div>
+      </a>
+      
+      <a href="#" class="nav-item" onclick="irA('ofertas', this)">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          <span>Ofertas</span>
+          <span class="badge">¡Top!</span>
+        </div>
+      </a>
+      
+      <a href="#" class="nav-item" onclick="irA('lista', this)">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <span>Mi Lista</span>
+        </div>
+      </a>
+
+      <a href="#" class="nav-item" id="nav-perfil-btn" onclick="irA('perfil', this)">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          <span id="sidebar-user-text">Mi Perfil</span>
+        </div>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      Merkipaki © 2026<br>Ahorra de verdad
+    </div>
+  </aside>
+
+  <main id="main">
+
+    <section id="pagina-comparador" class="pagina activa">
+      <header class="page-header">
+        <div>
+          <h1>Encuentra el mejor precio</h1>
+          <p>Comparamos productos idénticos entre los principales supermercados</p>
+        </div>
+      </header>
+
+      <div class="search-row">
+        <input class="input-line" type="text" id="busqueda" placeholder="¿Qué buscas hoy? (ej. leche, café, arroz...)" autocomplete="off" autofocus />
+        <button class="btn-primary" onclick="buscar()">Buscar</button>
+      </div>
+
+      <div class="filters-panel">
+        <div class="filter-element">
+          <label>Supermercado</label>
+          <select id="filtro-supermercado" onchange="buscar()">
+            <option value="">Todos los supers</option>
+            <option value="mercadona">Mercadona</option>
+            <option value="carrefour">Carrefour</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="chips-row">
+        <button class="chip activo" onclick="filtrarCategoria('todas', this)">Todos</button>
+        <button class="chip" onclick="filtrarCategoria('lácteos', this)">🥛 Lácteos</button>
+        <button class="chip" onclick="filtrarCategoria('aceites', this)">🫒 Aceites</button>
+        <button class="chip" onclick="filtrarCategoria('panadería', this)">🍞 Panadería</button>
+        <button class="chip" onclick="filtrarCategoria('bebidas', this)">🥤 Bebidas</button>
+      </div>
+
+      <div id="resultados-container">
+        <div class="empty-state">
+          <span class="empty-icon">🛒</span>
+          Escribe un producto arriba para empezar a comparar precios en tiempo real.
+        </div>
+      </div>
+    </section>
+
+    <section id="pagina-ofertas" class="pagina">
+      <header class="page-header">
+        <div>
+          <h1>⚡ Ofertas de la semana</h1>
+          <p>Chollos activos detectados automáticamente</p>
+        </div>
+      </header>
+
+      <div class="chips-row">
+        <button class="chip activo" onclick="filtrarOfertas('todas', this)">Todas</button>
+        <button class="chip" onclick="filtrarOfertas('Mercadona', this)">Mercadona</button>
+        <button class="chip" onclick="filtrarOfertas('Carrefour', this)">Carrefour</button>
+        <button class="chip" onclick="filtrarOfertas('Lidl', this)">Lidl</button>
+        <button class="chip" onclick="filtrarOfertas('Dia', this)">Dia</button>
+        <button class="chip" onclick="filtrarOfertas('Aldi', this)">Aldi</button>
+      </div>
+
+      <div id="ofertas-grid" class="ofertas-grid"></div>
+    </section>
+
+    <section id="pagina-lista" class="pagina">
+      <header class="page-header">
+        <div>
+          <h1>Lista de la compra</h1>
+          <p>Organiza lo que necesitas comprar</p>
+        </div>
+      </header>
+
+      <div class="search-row">
+        <input class="input-line" type="text" id="input-manual" placeholder="Añadir producto…" autocomplete="off" />
+        <input class="input-line input-precio" type="number" id="input-precio" placeholder="€" min="0" step="0.01" />
+        <button class="btn-primary" onclick="añadirManual()">Añadir</button>
+      </div>
+
+      <div class="lista-meta">
+        <span id="lista-total" class="total-text">Total: 0.00 €</span>
+        <div style="display: flex; gap: 12px;">
+          <button class="btn-primary" style="padding: 6px 14px; font-size: 0.85rem; background: #3a7d60;" id="btn-guardar-lista" onclick="guardarListaEnServidor()">💾 Guardar Lista</button>
+          <button class="btn-ghost-red" onclick="vaciarLista()">Vaciar</button>
+        </div>
+      </div>
+
+      <ul id="lista-items">
+        <li class="empty-state lista-vacia">
+          <span class="empty-icon">📝</span>
+          Tu lista está vacía. Añade productos desde el comparador o manualmente.
+        </li>
+      </ul>
+    </section>
+
+    <section id="pagina-perfil" class="pagina">
+      
+      <div id="perfil-anonimo">
+        <header class="page-header">
+          <div>
+            <h1 id="auth-form-title">Iniciar sesión</h1>
+            <p id="auth-form-desc">Accede a tu cuenta para guardar tus listas e historial de ahorro</p>
+          </div>
+        </header>
+
+        <div style="max-width: 420px; background: var(--surface); padding: 30px; border-radius: var(--radius); border: 1px solid var(--border); box-shadow: var(--shadow); margin: 0 auto;">
+          <form id="auth-form" onsubmit="procesarAuth(event)">
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label style="font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase;">Correo Electrónico</label>
+                <input class="input-line" type="email" id="auth-email" placeholder="tu@correo.com" required autocomplete="username">
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <label style="font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase;">Contraseña</label>
+                <input class="input-line" type="password" id="auth-password" placeholder="••••••••" required autocomplete="current-password">
+              </div>
+              <button class="btn-primary" type="submit" id="auth-submit-btn" style="padding: 12px 0; margin-top: 8px;">Entrar</button>
+            </div>
+          </form>
+
+          <div style="margin-top: 20px; text-align: center; font-size: 0.9rem; display: flex; flex-direction: column; gap: 8px;">
+            <a href="#" id="toggle-auth-mode-link" style="color: var(--accent); text-decoration: none; font-weight: 500;" onclick="cambiarModoAuth('registro')">¿No tienes cuenta? Regístrate aquí</a>
+            <a href="#" id="forgot-password-link" style="color: var(--muted); text-decoration: none; font-size: 0.85rem;" onclick="cambiarModoAuth('restablecer')">¿Has olvidado tu contraseña?</a>
+          </div>
+        </div>
+      </div>
+
+      <div id="perfil-conectado" style="display: none;">
+        <header class="page-header">
+          <div>
+            <h1>Mi Panel de Usuario</h1>
+            <p id="perfil-user-email">Conectado como: usuario@correo.com</p>
+          </div>
+          <button class="btn-ghost-red" style="font-weight: 600; font-size: 0.95rem;" onclick="cerrarSesionUser()">Cerrar sesión 🚪</button>
+        </header>
+
+        <h2 style="font-family: 'DM Serif Display', serif; font-size: 1.5rem; font-weight: 400; margin-bottom: 16px;">🗄️ Historial de listas guardadas</h2>
+        
+        <div id="historial-listas-container">
+          <div class="loading-state"><div class="spinner"></div> Cargando tu historial...</div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="toast">¡Elemento añadido!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
