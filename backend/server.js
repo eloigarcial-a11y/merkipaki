@@ -5,7 +5,7 @@ const cors     = require("cors");
 const path     = require("path");
 
 // 1. IMPORTAR LA CONFIGURACIÓN DE LA BASE DE DATOS (NUEVO)
-const { sequelize, testConnection } = require("./config/db");
+const sequelize = require("./config/db");
 
 // Importación de rutas existentes
 const productRoutes = require("./routes/products");
@@ -56,10 +56,8 @@ app.get("*", (req, res) => {
 });
 
 // 4. REEMPLAZO DEL APP.LISTEN POR LA SINCRONIZACIÓN DE SEQUELIZE (NUEVO)
-testConnection().then(() => {
-  return sequelize.sync();
-}).then(() => {
-  console.log("💾 Base de datos PostgreSQL conectada y sincronizada.");
+sequelize.sync().then(() => {
+  console.log("💾 Base de datos SQLite conectada y sincronizada.");
   
   app.listen(PORT, () => {
     console.log(`\n🛒 Merkipaki v2 corriendo en http://localhost:${PORT}`);
