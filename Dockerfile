@@ -1,9 +1,9 @@
-FROM node:18-bullseye
+FROM node:18-alpine
 
 WORKDIR /opt/render/project/src
 
 COPY package*.json ./
-RUN npm ci --build-from-source=sqlite3
+RUN npm ci
 
 COPY . .
 
