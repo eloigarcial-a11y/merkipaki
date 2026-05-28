@@ -5,7 +5,7 @@ const cors     = require("cors");
 const path     = require("path");
 
 // 1. IMPORTAR LA CONFIGURACIÓN DE LA BASE DE DATOS (NUEVO)
-const { initDatabase } = require("./config/db");
+const sequelize = require("./config/db");
 
 // Importación de rutas existentes
 const productRoutes = require("./routes/products");
@@ -55,19 +55,15 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/index.html"));
 });
 
-// 4. INICIALIZAR BASE DE DATOS CON SQL.JS (NUEVO)
-initDatabase().then((sequelize) => {
-  sequelize.sync().then(() => {
-    console.log("💾 Base de datos SQLite conectada y sincronizada.");
-    
-    app.listen(PORT, () => {
-      console.log(`\n🛒 Merkipaki v2 corriendo en http://localhost:${PORT}`);
-      console.log(`📦 API en http://localhost:${PORT}/api`);
-      console.log(`🔑 Apify: ${process.env.APIFY_TOKEN ? "✅ configurado" : "❌ no configurado"}\n`);
-    });
-  }).catch(err => {
-    console.error("❌ No se pudo sincronizar la base de datos:", err);
+// 4. REEMPLAZO DEL APP.LISTEN POR LA SINCRONIZACIÓN DE SEQUELIZE (NUEVO)
+sequelize.sync().then(() => {
+  console.log("💾 Base de datos SQLite conectada y sincronizada.");
+  
+  app.listen(PORT, () => {
+    console.log(`\n🛒 Merkipaki v2 corriendo en http://localhost:${PORT}`);
+    console.log(`📦 API en http://localhost:${PORT}/api`);
+    console.log(`🔑 Apify: ${process.env.APIFY_TOKEN ? "✅ configurado" : "❌ no configurado"}\n`);
   });
 }).catch(err => {
-  console.error("❌ No se pudo inicializar la base de datos:", err);
+  console.error("❌ No se pudo conectar o sincronizar la base de datos:", err);
 });
