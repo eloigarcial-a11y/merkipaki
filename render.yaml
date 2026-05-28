@@ -1,10 +1,9 @@
 services:
   - type: web
     name: merkipaki
-    env: node
+    env: docker
     plan: free
-    buildCommand: NPM_CONFIG_BUILD_FROM_SOURCE=sqlite3 npm ci && npm rebuild sqlite3 --build-from-source
-    startCommand: npm start
+    dockerfilePath: Dockerfile
     envVars:
       - key: JWT_SECRET
         sync: false
