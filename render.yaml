@@ -3,7 +3,7 @@ services:
     name: merkipaki
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm ci --build-from-source=sqlite3
     startCommand: npm start
     envVars:
       - key: JWT_SECRET
